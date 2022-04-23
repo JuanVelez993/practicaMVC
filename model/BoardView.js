@@ -11,9 +11,11 @@ class boardView {
     draw(context, element) {
         switch (element.kind) {
             case "rectangle":
+                context.fillStyle = "red";
                 context.fillRect(element.x, element.y, element.width, element.height);
                 break;
             case "circle":
+                context.fillStyle = "green";
                 context.beginPath();
                 context.arc(element.x, element.y, element.radius, 0, 7);
                 context.fill();
@@ -39,6 +41,8 @@ class boardView {
             this.clean();
             this.drawBars();
             this.checkCollisions();
+            this.ballReset();
+            this.wallControl();
             this.board.ball.moveBall();
         }
 
@@ -55,24 +59,49 @@ class boardView {
     }
 
     hit(bar, ball) {
-        let didHit = false;
+        let hit = false;
         if (ball.x + ball.width >= bar.x && ball.x < bar.x + bar.width) {
             if (ball.y + ball.height >= bar.y && ball.y < bar.y + bar.height) {
-                didHit = true;
+                hit = true;
             }
         }
         if (ball.x <= bar.x && ball.x + ball.width >= bar.x + bar.width) {
             if (ball.y <= bar.y && ball.y + ball.height >= bar.y + bar.height) {
-                didHit = true;
+                hit = true;
             }
         }
         if (bar.x <= ball.x && bar.x + bar.width >= ball.x + ball.width) {
             if (bar.y <= ball.y && bar.y + bar.height >= ball.y + ball.height) {
-                didHit = true;
+                hit = true;
             }
         }
-        return didHit;
+        return hit;
     };
+
+
+    ballReset() {
+        const ball = this.board.ball;
+        if (ball.x - ball.radius < 0) {
+            this.resetBall();
+        } else if (ball.x + ball.radius > this.board.width) {
+            this.resetBall();
+        }
+    }
+
+    wallControl() {
+        const ball = this.board.ball;
+        if (ball.y - ball.radius < 0 || ball.y + ball.radius > this.board.height) {
+            ball.speedY = -ball.speedY;
+        }
+    }
+
+    resetBall() {
+        const ball = this.board.ball;
+        ball.x = this.board.width / 2;
+        ball.y = this.board.height / 2;
+        ball.speedX = -ball.speedX;
+        ball.speed = 3;
+    }
 }
 
 export default boardView;

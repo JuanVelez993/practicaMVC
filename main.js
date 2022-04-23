@@ -35,6 +35,7 @@ document.addEventListener("keydown", function(event) {
 
 
 
+
 function main() {
     boardView.playGame();
     window.requestAnimationFrame(main);
