@@ -10,10 +10,16 @@ class boardView {
 
     draw(context, element) {
         if (element !== null && element.hasOwnProperty("kind")) {
-            console.log(element)
+
             switch (element.kind) {
                 case "rectangle":
                     context.fillRect(element.x, element.y, element.width, element.height);
+                    break;
+                case "circle":
+                    context.beginPath();
+                    context.arc(element.x, element.y, element.radius, 0, Math.PI);
+                    context.fill();
+                    context.closePath();
                     break;
                 default:
                     break;
@@ -23,10 +29,15 @@ class boardView {
     }
 
     drawBars() {
-        const bars = this.board.bars;
+        const bars = this.board.getElements();
         for (const bar of bars) {
             this.draw(this.context, bar);
         }
     }
+    clean() {
+        this.context.clearRect(0, 0, this.board.width, this.board.height);
+    }
+
+
 }
 export default boardView;
