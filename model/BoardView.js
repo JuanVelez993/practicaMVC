@@ -17,7 +17,7 @@ class boardView {
                     break;
                 case "circle":
                     context.beginPath();
-                    context.arc(element.x, element.y, element.radius, 0, Math.PI);
+                    context.arc(element.x, element.y, element.radius, 0, 7);
                     context.fill();
                     context.closePath();
                     break;
@@ -36,6 +36,15 @@ class boardView {
     }
     clean() {
         this.context.clearRect(0, 0, this.board.width, this.board.height);
+    }
+
+    playGame() {
+        if (this.board.playing) {
+            this.clean();
+            this.drawBars();
+            this.board.ball.moveBall();
+        }
+
     }
 
 

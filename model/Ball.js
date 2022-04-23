@@ -6,10 +6,14 @@ class Ball {
         this.board = board;
         board.ball = this;
         this.kind = "circle";
-        this.speedX = 0;
-        this.speedy = 3;
+        this.speedX = 3;
+        this.speedY = 0;
+        this.direction = 1;
 
     }
-
+    moveBall() {
+        this.x += (this.speedX * this.direction);
+        this.y += (this.speedY);
+    }
 }
 export default Ball;

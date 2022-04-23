@@ -4,7 +4,7 @@ import Bar from './model/Bar.js';
 import Ball from './model/Ball.js';
 
 
-//window.addEventListener("load", main);
+
 
 const canvas = document.getElementById('canvas');
 const board = new Board(800, 400);
@@ -13,26 +13,30 @@ const barRight = new Bar(735, 100, 40, 100, board);
 const ball = new Ball(350, 100, 10, board);
 const boardView = new BoardView(canvas, board);
 document.addEventListener("keydown", function(event) {
-
-    if (event.key === "w") {
+    if (event.key == "w") {
+        event.preventDefault();
         barLeft.up();
-    } else if (event.key === "s") {
+    } else if (event.key == "s") {
+        event.preventDefault();
         barLeft.down();
-    } else if (event.key === "ArrowUp") {
+    }
+    if (event.key == "ArrowUp") {
+        event.preventDefault();
         barRight.up();
-    } else if (event.key === "ArrowDown") {
+    } else if (event.key == "ArrowDown") {
+        event.preventDefault();
         barRight.down();
+    } else if (event.key == " ") {
+        event.preventDefault();
+        board.playing = !board.playing;
     }
 
-})
+});
 
 
 
 function main() {
-    boardView.clean();
-    boardView.drawBars();
+    boardView.playGame();
     window.requestAnimationFrame(main);
-
-
 };
 main();

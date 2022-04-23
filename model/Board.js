@@ -9,7 +9,7 @@ class Board {
     }
 
     getElements() {
-        let elements = this.bars;
+        let elements = this.bars.map(function(bar) { return bar; });;
         elements.push(this.ball);
         return elements;
 
