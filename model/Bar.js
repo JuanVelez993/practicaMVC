@@ -7,14 +7,20 @@ class Bar {
         this.board = board;
         this.board.bars.push(this);
         this.kind = "rectangle";
+        this.speed = 10;
 
     }
 
     down() {
-
+        this.y += this.speed;
     }
-    up() {
 
+    up() {
+        this.y -= this.speed;
+    }
+
+    toString() {
+        return "x:" + this.x + " y:" + this.y;
     }
 }
 export default Bar

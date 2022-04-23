@@ -13,6 +13,15 @@ function main() {
     console.log(board);
     let boardView = new BoardView(canvas, board);
     boardView.drawBars();
+    document.addEventListener('keydown', function(event) {
+
+        if (event.key === 'w') {
+            barLeft.up();
+
+        } else if (event.key === 's') {
+            barLeft.down();
+        }
+    })
 
 };
 main();
