@@ -9,23 +9,19 @@ class boardView {
     }
 
     draw(context, element) {
-        if (element !== null && element.hasOwnProperty("kind")) {
-
-            switch (element.kind) {
-                case "rectangle":
-                    context.fillRect(element.x, element.y, element.width, element.height);
-                    break;
-                case "circle":
-                    context.beginPath();
-                    context.arc(element.x, element.y, element.radius, 0, 7);
-                    context.fill();
-                    context.closePath();
-                    break;
-                default:
-                    break;
-            }
+        switch (element.kind) {
+            case "rectangle":
+                context.fillRect(element.x, element.y, element.width, element.height);
+                break;
+            case "circle":
+                context.beginPath();
+                context.arc(element.x, element.y, element.radius, 0, 7);
+                context.fill();
+                context.closePath();
+                break;
+            default:
+                break;
         }
-
     }
 
     drawBars() {
@@ -50,41 +46,33 @@ class boardView {
 
     checkCollisions() {
         const bars = this.board.bars;
-        for (const bar of bars) {
+        for (let i = bars.length - 1; i >= 0; i--) {
+            const bar = bars[i];
             if (this.hit(bar, this.board.ball)) {
                 this.board.ball.collision(bar);
             }
         }
     }
 
-    hit(object1, object2) {
-        var hit = false;
-        if (object2.x + object2.width >= object1.x && object2.x < object1.x + object1.width) {
-
-            if (object2.y + object2.height >= object1.y && object2.y < object1.y + object1.height) {
-                hit = true;
+    hit(bar, ball) {
+        let didHit = false;
+        if (ball.x + ball.width >= bar.x && ball.x < bar.x + bar.width) {
+            if (ball.y + ball.height >= bar.y && ball.y < bar.y + bar.height) {
+                didHit = true;
             }
         }
-
-
-        if (object2.x <= object1.x && object2.x + object2.width >= object1.x + object1.width) {
-
-            if (object2.y <= object1.y && object2.y + object2.height >= object1.y + object1.height) {
-                hit = true;
+        if (ball.x <= bar.x && ball.x + ball.width >= bar.x + bar.width) {
+            if (ball.y <= bar.y && ball.y + ball.height >= bar.y + bar.height) {
+                didHit = true;
             }
         }
-
-
-        if (object1.x <= object2.x && object1.x + object1.width >= object2.x + object2.width) {
-
-            if (object1.y <= object2.y && object1.y + object1.height >= object2.y + object2.height) {
-                hit = true;
+        if (bar.x <= ball.x && bar.x + bar.width >= ball.x + ball.width) {
+            if (bar.y <= ball.y && bar.y + bar.height >= ball.y + ball.height) {
+                didHit = true;
             }
         }
-        return hit;
-
-
-    }
+        return didHit;
+    };
 }
 
 export default boardView;
